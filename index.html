@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookShelf Apps</title>
+    <link rel="stylesheet" href="style/style.css">
 </head>
 
 <body>
@@ -33,12 +34,18 @@
                 </div>
                 <div class="form-element insertOption">
                     <h4>Insert Book to</h4>
-                    <label for="radioIncomplete">Unfinished Reading</label>
-                    <input type="radio" id="radioIncomplete" name="radioReadOption">
-                    <label for="radioCompleted">Finished Reading</label>
-                    <input type="radio" id="radioCompleted" name="radioReadOption">
+                    <table border="0" cellspacing="8">
+                        <tr>
+                            <td><label for="radioIncomplete">Unfinished Reading</label></td>
+                            <td><input type="radio" id="radioIncomplete" name="radioReadOption"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="radioCompleted">Finished Reading</label></td>
+                            <td><input type="radio" id="radioCompleted" name="radioReadOption"></td>
+                        </tr>
+                    </table>
                 </div>
-                <div class="form-element">
+                <div class="form-element" id="formSubmit">
                     <button id="submitBtn">Insert Book</button>
                 </div>
             </form>
