@@ -17,8 +17,8 @@ function addBooks() {
     const generatedId = generateId();
 
     const radioButtons = document.querySelectorAll('input[name="radioReadOption"]');
+    let radioChecked;
     for (const radioBtn of radioButtons) {
-        let radioChecked;
         if (radioBtn.checked) {
             radioChecked = radioBtn.value;
         }
@@ -26,12 +26,13 @@ function addBooks() {
 
     let bookObject;
 
-    if (radioChecked == 'unfinishedReadOption') {
+    if (radioChecked == 'unfinishedBookOption') {
         bookObject = generateBookObject(generatedId, textTitle, textAuthor, yearBook, false);
     } else {
         bookObject = generateBookObject(generatedId, textTitle, textAuthor, yearBook, true);
     }
     books.push(bookObject);
+    document.dispatchEvent(new Event(RENDER_EVENT));
 }
 
 function generateId() {
@@ -82,4 +83,6 @@ function makeBooks(bookObject) {
 
     // lanjutin function ini
     // buat function moveBookToFinished.
+
+    return container;
 }
