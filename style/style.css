@@ -74,3 +74,124 @@ input[type=number] {
     border: 1px solid var(--var-primary-color);
     border-radius: 8px;
 }
+
+.search-book {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 24px;
+    margin: 12px 0px;
+    border: 3px solid black;
+    border-radius: 8px;
+}
+
+.search-book h2 {
+    color: var(--var-primary-color);
+    text-align: center;
+}
+
+.search-book>form {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 8% 60% 25%;
+    grid-gap: 8px;
+}
+
+.search-book>form>label {
+    width: 100%;
+}
+
+.search-book>form>input {
+    width: 100%;
+    padding: 4px;
+    margin: 0px 24px 0px 0px;
+    border: 1px solid black;
+    border-radius: 4px;
+}
+
+.search-book>form>button {
+    cursor: pointer;
+    width: 100%;
+    padding: 4px;
+    margin: 0px 0px 0px 24px;
+    text-align: center;
+    background-color: var(--var-secondary-color);
+    color: white;
+    border: 1px solid var(--var-primary-color);
+    border-radius: 8px;
+}
+
+.bookShelf {
+    padding: 24px;
+    margin: 12px 0 0 0;
+    border: 3px solid black;
+    border-radius: 8px;
+}
+
+.bookShelf>.bookList {
+    padding: 12px;
+}
+
+.bookShelf>.bookList>.bookItem {
+    padding: 18px;
+    border: 1px solid black;
+}
+
+.bookShelf>.bookList>.bookItem>.action>button {
+    padding: 8px;
+    margin: 8px 16px 0 0;
+    color: var(--var-primary-color);
+    border: 1px solid var(--var-primary-color);
+    border-radius: 8px;
+}
+
+.bookShelf>.bookList>.bookItem>.action>button:hover {
+    cursor: pointer;
+    background-color: var(--var-primary-color);
+    color: white;
+    transition: ease-in 100ms;
+}
+
+footer {
+    padding: 24px;
+    margin: 12px 0 0 0;
+    background-color: var(--var-primary-color);
+    color: white;
+    text-align: center;
+}
+
+@media screen and (max-width: 767px) {
+    .search-book>form {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .search-book>form>label {
+        font-size: smaller;
+        flex-basis: 15%;
+    }
+
+    .search-book>form>input {
+        flex-basis: 70%;
+    }
+
+    .search-book>form>button {
+        flex-basis: 15%;
+        margin-left: -16px;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .bookItem {
+        padding: 8px;
+        margin: 10px 0 8px 0;
+        font-size: 14px;
+    }
+
+    .action button {
+        display: block;
+        padding: 4px;
+        margin: 0 0 8px 0;
+        font-size: 8px;
+    }
+}
