@@ -12,6 +12,7 @@ html,
 body,
 button {
     font-family: 'Uchen', sans-serif;
+    font-size: 16px;
 }
 
 :root {
@@ -66,7 +67,7 @@ input[type=number] {
 
 #formSubmit>button {
     cursor: pointer;
-    font-size: large;
+    font-size: 1.25rem;
     width: 75%;
     padding: 12px;
     background-color: var(--var-secondary-color);
@@ -134,10 +135,11 @@ input[type=number] {
 
 .bookShelf>.bookList>.bookItem {
     padding: 18px;
+    margin: 12px 0 0 0;
     border: 1px solid black;
 }
 
-.bookShelf>.bookList>.bookItem>.action>button {
+.bookShelf>.bookList>.bookItem>button {
     padding: 8px;
     margin: 8px 16px 0 0;
     color: var(--var-primary-color);
@@ -145,7 +147,7 @@ input[type=number] {
     border-radius: 8px;
 }
 
-.bookShelf>.bookList>.bookItem>.action>button:hover {
+.bookShelf>.bookList>.bookItem>button:hover {
     cursor: pointer;
     background-color: var(--var-primary-color);
     color: white;
@@ -167,7 +169,7 @@ footer {
     }
 
     .search-book>form>label {
-        font-size: smaller;
+        font-size: 0.75rem;
         flex-basis: 15%;
     }
 
@@ -185,13 +187,13 @@ footer {
     .bookItem {
         padding: 8px;
         margin: 10px 0 8px 0;
-        font-size: 14px;
+        font-size: 0.5rem;
     }
 
-    .action button {
+    .bookItem button {
         display: block;
         padding: 4px;
         margin: 0 0 8px 0;
-        font-size: 8px;
+        font-size: 0.5rem;
     }
 }

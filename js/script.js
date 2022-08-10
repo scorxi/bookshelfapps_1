@@ -28,9 +28,13 @@ function addBooks() {
 
     if (radioChecked == 'unfinishedBookOption') {
         bookObject = generateBookObject(generatedId, textTitle, textAuthor, yearBook, false);
-    } else {
+    } else if (radioChecked == 'finishedBookOption') {
         bookObject = generateBookObject(generatedId, textTitle, textAuthor, yearBook, true);
     }
+    // else {
+    //     alert('Test1');
+    //     window.location.reload();
+    // }
     books.push(bookObject);
     document.dispatchEvent(new Event(RENDER_EVENT));
 }
@@ -59,7 +63,7 @@ document.addEventListener(RENDER_EVENT, function () {
     for (const bookItem of books) {
         const bookElements = makeBooks(bookItem);
         if (!bookItem.isFinished) {
-            unfinishedBooks.append(bookElements);
+            unfinishedBooks.append(bookElements)
         } else {
             finishedBooks.append(bookElements);
         }
@@ -82,7 +86,43 @@ function makeBooks(bookObject) {
     container.append(textBookTitle, textBookAuthor, textBookYear);
 
     // lanjutin function ini
-    // buat function moveBookToFinished.
+    if (bookObject.isFinished) {
+        const moveToUnfinishedBtn = document.createElement('button');
+        moveToUnfinishedBtn.classList.add('moveToUnfinishedBtn');
+        moveToUnfinishedBtn.innerText = "Move to Unfinished Reading";
+
+        moveToUnfinishedBtn.addEventListener('click', function () {
+            moveBookToUnfinished(bookObject.id);
+        })
+
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('removeBtn');
+        removeBtn.innerText = "Remove Book";
+
+        removeBtn.addEventListener('click', function () {
+            removeBook(bookObject.id);
+        })
+
+        container.append(moveToUnfinishedBtn, removeBtn);
+    } else {
+        const moveToFinishedBtn = document.createElement('button');
+        moveToFinishedBtn.classList.add('moveToFinishedBtn');
+        moveToFinishedBtn.innerText = "Move To Finished Reading";
+
+        moveToFinishedBtn.addEventListener('click', function () {
+            moveBookToFinished(bookObject.id);
+        })
+
+        const removeBtn = document.createElement('button');
+        removeBtn.classList.add('removeBtn');
+        removeBtn.innerText = "Remove Book";
+
+        removeBtn.addEventListener('click', function () {
+            removeBook(bookObject.id);
+        })
+
+        container.append(moveToFinishedBtn, removeBtn);
+    }
 
     return container;
 }
