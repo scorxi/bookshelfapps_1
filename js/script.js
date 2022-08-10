@@ -6,8 +6,36 @@ document.addEventListener('DOMContentLoaded', function () {
     insertForm.addEventListener('submit', function (event) {
         event.preventDefault();
         addBooks();
+    });
+
+    if (isStorageExist()) {
+        loadDataFromStorage();
+    }
+
+
+    const btnResetData = document.getElementById('resetBtn');
+    btnResetData.addEventListener('click', function () {
+        Swal.fire({
+            title: `Remove All Books`,
+            text: "Are you sure to remove all books?",
+            icon: 'warning',
+            confirmButtonText: 'Yes, Remove All!',
+            confirmButtonColor: '#2C3333',
+            showCancelButton: true,
+            cancelButtonColor: '#395B64'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                removeAllBooks();
+                // Swal.fire(
+                //     "Deleted",
+                //     `Book ${bookTitle} has been removed`,
+                //     'success'
+
+                // )
+            }
+        });
     })
-})
+});
 
 function addBooks() {
     const textTitle = document.getElementById('bookTitle').value;
@@ -30,18 +58,26 @@ function addBooks() {
         bookObject = generateBookObject(generatedId, textTitle, textAuthor, yearBook, false);
     } else if (radioChecked == 'finishedBookOption') {
         bookObject = generateBookObject(generatedId, textTitle, textAuthor, yearBook, true);
+    } else {
+        Swal.fire({
+            title: 'Oops, Somethin isn\'t quite right.',
+            text: 'You need to check either the book is Finished or Unfinsihed',
+            icon: 'info',
+            confirmButtonText: "OK"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.reload();
+            }
+        })
     }
-    // else {
-    //     alert('Test1');
-    //     window.location.reload();
-    // }
     books.push(bookObject);
     document.dispatchEvent(new Event(RENDER_EVENT));
-}
+    saveData();
+};
 
 function generateId() {
     return +new Date();
-}
+};
 
 function generateBookObject(id, title, author, year, isFinished) {
     return {
@@ -93,15 +129,34 @@ function makeBooks(bookObject) {
 
         moveToUnfinishedBtn.addEventListener('click', function () {
             moveBookToUnfinished(bookObject.id);
-        })
+        });
 
         const removeBtn = document.createElement('button');
         removeBtn.classList.add('removeBtn');
         removeBtn.innerText = "Remove Book";
 
         removeBtn.addEventListener('click', function () {
-            removeBook(bookObject.id);
-        })
+            const bookTitle = bookObject.title;
+            Swal.fire({
+                title: `Delete ${bookTitle}?`,
+                text: "You won't be able to revert this.",
+                icon: 'warning',
+                confirmButtonText: 'Delete Book',
+                confirmButtonColor: '#2C3333',
+                showCancelButton: true,
+                cancelButtonColor: '#395B64'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    removeBook(bookObject.id);
+                    Swal.fire(
+                        "Deleted",
+                        `Book ${bookTitle} has been removed`,
+                        'success'
+
+                    )
+                }
+            });
+        });
 
         container.append(moveToUnfinishedBtn, removeBtn);
     } else {
@@ -111,18 +166,154 @@ function makeBooks(bookObject) {
 
         moveToFinishedBtn.addEventListener('click', function () {
             moveBookToFinished(bookObject.id);
-        })
+        });
 
         const removeBtn = document.createElement('button');
         removeBtn.classList.add('removeBtn');
         removeBtn.innerText = "Remove Book";
 
         removeBtn.addEventListener('click', function () {
-            removeBook(bookObject.id);
-        })
+            const bookTitle = bookObject.title;
+            Swal.fire({
+                title: `Delete ${bookTitle}?`,
+                text: "You won't be able to revert this.",
+                icon: 'warning',
+                confirmButtonText: 'Delete Book',
+                confirmButtonColor: '#2C3333',
+                showCancelButton: true,
+                cancelButtonColor: '#395B64'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    removeBook(bookObject.id);
+                    Swal.fire(
+                        "Deleted",
+                        `Book ${bookTitle} has been removed`,
+                        'success'
+
+                    )
+                }
+            });
+        });
 
         container.append(moveToFinishedBtn, removeBtn);
     }
 
     return container;
+};
+
+function removeBook(bookId) {
+    const itemTarget = findBookIndex(bookId)
+
+    if (itemTarget === -1) {
+        return;
+    }
+
+    books.splice(itemTarget, 1);
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
+};
+
+function findBookIndex(bookId) {
+    for (const index in books) {
+        if (books[index].id == bookId) {
+            return index;
+        }
+    }
+
+    return -1 // elemen yang dicari adalah index - 1
+};
+
+function removeAllBooks() {
+    const collectionOfData = localStorage.getItem('STORAGE_KEY');
+    let data = JSON.parse(collectionOfData);
+    const bookData = books;
+
+    if (bookData.length == 0) {
+        Swal.fire(
+            "No Book Deleted",
+            "You need to add at least one book to the shelf",
+            'info'
+        )
+    } else if (data !== null) {
+        for (const book of data) {
+            books.pop(book);
+            Swal.fire(
+                "Deleted",
+                `All Books has been removed`,
+                'success'
+
+            )
+        }
+    }
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
 }
+
+function moveBookToFinished(bookId) {
+    const itemTarget = findBook(bookId);
+
+    if (itemTarget == null) {
+        return;
+    }
+
+    itemTarget.isFinished = true;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData()
+};
+
+function moveBookToUnfinished(bookId) {
+    const itemTarget = findBook(bookId);
+
+    if (itemTarget == null) {
+        return;
+    }
+
+    itemTarget.isFinished = false;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
+};
+
+function findBook(bookId) {
+    for (const bookItem of books) {
+        if (bookItem.id === bookId) {
+            return bookItem;
+        }
+    }
+    return null;
+};
+
+const SAVED_EVENT = 'saved-books';
+const STORAGE_KEY = 'BookShelf_Apps';
+
+function isStorageExist() {
+    if (typeof (Storage) === 'undefined') {
+        alert("Oops, Your browser doesn't support web storage.");
+        return false;
+    }
+    return true;
+};
+
+document.addEventListener('SAVED_EVENT', function () {
+    console.log(localStorage.getItem(STORAGE_KEY));
+});
+
+function saveData() {
+    if (isStorageExist()) {
+        const jsParsed = JSON.stringify(books);
+        localStorage.setItem(STORAGE_KEY, jsParsed);
+        document.dispatchEvent(new Event(RENDER_EVENT));
+    }
+};
+
+function loadDataFromStorage() {
+    const collectionOfData = localStorage.getItem(STORAGE_KEY);
+    let data = JSON.parse(collectionOfData);
+
+    if (data !== null) {
+        for (const book of data) {
+            books.push(book);
+        }
+    }
+    document.dispatchEvent(new Event(RENDER_EVENT));
+};

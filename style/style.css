@@ -154,6 +154,32 @@ input[type=number] {
     transition: ease-in 100ms;
 }
 
+.resetData {
+    padding: 24px;
+    margin: 12px 0 0 0;
+    border: 3px solid black;
+    border-radius: 8px;
+}
+
+.resetBtn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.resetBtn>button {
+    cursor: pointer;
+    font-size: 1.25rem;
+    width: 75%;
+    padding: 12px;
+    background-color: var(--var-secondary-color);
+    color: white;
+    border: 1px solid var(--var-primary-color);
+    border-radius: 8px;
+}
+
+
 footer {
     padding: 24px;
     margin: 12px 0 0 0;
