@@ -26,12 +26,6 @@ document.addEventListener('DOMContentLoaded', function () {
         }).then((result) => {
             if (result.isConfirmed) {
                 removeAllBooks();
-                // Swal.fire(
-                //     "Deleted",
-                //     `Book ${bookTitle} has been removed`,
-                //     'success'
-
-                // )
             }
         });
     })
@@ -121,7 +115,6 @@ function makeBooks(bookObject) {
     container.setAttribute('id', `book-${bookObject.id}`);
     container.append(textBookTitle, textBookAuthor, textBookYear);
 
-    // lanjutin function ini
     if (bookObject.isFinished) {
         const moveToUnfinishedBtn = document.createElement('button');
         moveToUnfinishedBtn.classList.add('moveToUnfinishedBtn');
