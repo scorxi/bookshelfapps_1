@@ -60,7 +60,16 @@ function addBooks() {
             confirmButtonText: "OK"
         }).then((result) => {
             if (result.isConfirmed) {
+                const collectionOfData = localStorage.getItem(STORAGE_KEY);
+                const data = JSON.parse(collectionOfData);
+
+                for (data of books) {
+                    if (data == null) {
+                        removeBook(data);
+                    }
+                }
                 window.location.reload();
+
             }
         })
     }
@@ -94,7 +103,7 @@ document.addEventListener(RENDER_EVENT, function () {
         const bookElements = makeBooks(bookItem);
         if (!bookItem.isFinished) {
             unfinishedBooks.append(bookElements)
-        } else {
+        } else if (bookItem.isFinished) {
             finishedBooks.append(bookElements);
         }
     }
