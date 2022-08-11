@@ -222,4 +222,9 @@ footer {
         margin: 0 0 8px 0;
         font-size: 0.5rem;
     }
+
+    .resetBtn button {
+        padding: 6px;
+        font-size: 0.75rem;
+    }
 }

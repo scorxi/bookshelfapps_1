@@ -61,7 +61,7 @@ function addBooks() {
     } else {
         Swal.fire({
             title: 'Oops, Somethin isn\'t quite right.',
-            text: 'You need to check either the book is Finished or Unfinsihed',
+            text: 'You may need to check if the book is Finished or Unifinshed.',
             icon: 'info',
             confirmButtonText: "OK"
         }).then((result) => {
@@ -200,6 +200,23 @@ function makeBooks(bookObject) {
 
     return container;
 };
+
+const searchBtn = document.getElementById('searchBtn');
+
+searchBtn.addEventListener('click', function (event) {
+    const searchBar = document.querySelector('input[name="searchBar"]');
+    const valueSearch = searchBar.value;
+    const bookItems = document.querySelectorAll('article h3');
+
+    for (const book of bookItems) {
+        if (book.innerText.toLowerCase().includes(valueSearch.toLowerCase())) {
+            book.parentElement.style.display = "block";
+        } else {
+            book.parentElement.style.display = "none";
+        }
+    }
+    event.preventDefault();
+})
 
 function removeBook(bookId) {
     const itemTarget = findBookIndex(bookId)
