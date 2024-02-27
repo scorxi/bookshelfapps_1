@@ -242,33 +242,6 @@ function findBookIndex(bookId) {
     return -1 // elemen yang dicari adalah index - 1
 };
 
-function removeAllBooks() {
-    const collectionOfData = localStorage.getItem('STORAGE_KEY');
-    let data = JSON.parse(collectionOfData);
-    const bookData = books;
-
-    if (bookData.length == 0) {
-        Swal.fire(
-            "No Book Deleted",
-            "You need to add at least one book to the shelf",
-            'info'
-        )
-    } else if (data !== null) {
-        for (const book of data) {
-            books.pop(book);
-            Swal.fire(
-                "Deleted",
-                `All Books has been removed`,
-                'success'
-
-            )
-        }
-    }
-
-    document.dispatchEvent(new Event(RENDER_EVENT));
-    saveData();
-}
-
 function moveBookToFinished(bookId) {
     const itemTarget = findBook(bookId);
 
@@ -302,6 +275,8 @@ function findBook(bookId) {
     return null;
 };
 
+
+// Storage Setup
 const SAVED_EVENT = 'saved-books';
 const STORAGE_KEY = 'BookShelf_Apps';
 
@@ -313,10 +288,6 @@ function isStorageExist() {
     return true;
 };
 
-document.addEventListener('SAVED_EVENT', function () {
-    console.log(localStorage.getItem(STORAGE_KEY));
-});
-
 function saveData() {
     if (isStorageExist()) {
         const jsParsed = JSON.stringify(books);
@@ -327,6 +298,7 @@ function saveData() {
 
 function loadDataFromStorage() {
     const collectionOfData = localStorage.getItem(STORAGE_KEY);
+    console.log('collections', collectionOfData)
     let data = JSON.parse(collectionOfData);
 
     if (data !== null) {
@@ -336,3 +308,30 @@ function loadDataFromStorage() {
     }
     document.dispatchEvent(new Event(RENDER_EVENT));
 };
+
+function removeAllBooks() {
+    const collectionOfData = localStorage.getItem(STORAGE_KEY);
+    let data = JSON.parse(collectionOfData);
+    const bookData = books;
+
+    if (bookData.length == 0) {
+        Swal.fire(
+            "No Book Deleted",
+            "You need to add at least one book to the shelf",
+            'info'
+        )
+    } else if (data !== null) {
+        for (const book of data) {
+            books.pop(book);
+            Swal.fire(
+                "Deleted",
+                `All Books has been removed`,
+                'success'
+
+            )
+        }
+    }
+
+    document.dispatchEvent(new Event(RENDER_EVENT));
+    saveData();
+}

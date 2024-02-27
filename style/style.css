@@ -1,6 +1,4 @@
 /* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Uchen&display=swap');
-
 * {
     padding: 0;
     margin: 0;
@@ -11,7 +9,7 @@ input[type=number]::-webkit-input-placeholder,
 html,
 body,
 button {
-    font-family: 'Uchen', sans-serif;
+    font-family: 'Poppins', sans-serif;
     font-size: 16px;
 }
 
@@ -51,6 +49,8 @@ main {
 
 .input-form>form>.form-element>input[type=text],
 input[type=number] {
+    font-family: 'Poppins', sans-serif;
+    letter-spacing: 1px;
     width: 95%;
     padding: 8px;
     margin: 12px 0px;
@@ -74,6 +74,58 @@ input[type=number] {
     color: white;
     border: 1px solid var(--var-primary-color);
     border-radius: 8px;
+}
+
+/* Radio button container */
+.radio-container {
+    display: inline-block;
+    position: relative;
+    padding-left: 25px;
+    margin-right: 15px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Hide the actual radio button */
+.radio-container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Custom radio button */
+.radio-checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 20px;
+    width: 20px;
+    background-color: #CCC;
+    border-radius: 50%;
+}
+
+/* Show the indicator when radio button is checked */
+.radio-container input:checked~.radio-checkmark:after {
+    content: '';
+    position: absolute;
+    display: block;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #395B64;
+}
+
+/* Hover effect */
+.radio-container:hover .radio-checkmark {
+    background-color: #EEE;
+}
+
+/* Radio button label */
+.radio-label {
+    margin-left: 30px;
 }
 
 .search-book {
